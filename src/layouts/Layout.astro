@@ -18,11 +18,11 @@ const {
   image = CV.basics.image,
   canonicalURL = CV.basics.url,
   keywords = [
-    "Anmol Singh",
-    "AJ Dev",
-    "Anmol Pro",
-    "Full Stack Developer",
-    "Frontend Developer",
+    "Godfrey Ogembo",
+    "Cloud Engineer",
+    "Backend Developer",
+    "Software Engineer",
+    "Python Developer",
     "Backend Developer",
     "Web Developer",
     "Software Engineer",
@@ -43,14 +43,13 @@ const { url, theme, name, location } = CV.basics;
 const { city, region } = location;
 
 // Create a more detailed description
-const detailedDescription = `Anmol Singh (AJ Dev) - Full Stack Developer. Explore my portfolio, projects, and contact info. Frontend, backend, and more.`;
+const detailedDescription = `Godfrey Ogembo - Backend Engineer. Explore my portfolio, projects, and contact info. Infrastructure, backend, and more.`;
 
 // Create structured data for better SEO
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "Person",
   "name": name,
-  "alternateName": "AJ Dev",
   "jobTitle": CV.basics.label,
   "url": url,
   "email": CV.basics.email,
@@ -124,8 +123,10 @@ const breadcrumbSchema = {
     <link rel="canonical" href={canonicalURL} />
     
     <!-- Favicon -->
-    <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
-    <link rel="apple-touch-icon" href="/apple-touch-icon.webp" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     
     <!-- Preload critical assets -->
     <link rel="preload" as="image" href={image} />
