@@ -93,7 +93,10 @@ function handleCommand(command: string) {
     const cmd = command.slice(1).toLowerCase();
     switch (cmd) {
       case 'proj':
-        window.location.href = 'neovim/projects';
+        window.location.href = '/neovim/projects';
+        break;
+      case 'blog':
+        window.location.href = '/neovim/blog';
         break;
       case 'about':
         window.location.href = '/neovim/about';

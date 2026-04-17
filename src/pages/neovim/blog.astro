@@ -1,0 +1,41 @@
+---
+import Layout from '@layouts/Neovim.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog');
+posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<Layout title="Blog">
+  <ul id="blog-list" class="space-y-8">
+    {posts.map(post => (
+      <li class="mb-6 project-item leading-6 nvim-line" data-href={`/neovim/blog/${post.id}`}>
+        <div class="flex items-center gap-4">
+          <a
+            class="group flex items-center gap-1 text-xl decoration-dotted underline-offset-[5px] hover:underline transition-all duration-200 text-blue project-url"
+            href={`/neovim/blog/${post.id}`}
+            title={`Read ${post.data.title}`}
+          >
+            {post.data.title}
+          </a>
+          <span class="text-sm text-green">
+            {post.data.pubDate.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
+          </span>
+        </div>
+        <p class="text-gray-500 mt-2">
+          {post.data.description}
+        </p>
+        
+        {post.data.tags && (
+          <ul class="flex flex-wrap gap-2 mt-4" aria-label="Tags">
+            {post.data.tags.map((tag: string, index) => (
+              <li class=" cursor-default bg-transparent border-nvim-green/60 text-green flex items-center border-solid border rounded-md px-2 py-1 text-xs backdrop-blur-sm">
+                <span>#{tag}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </li>
+    ))}
+  </ul>
+</Layout>

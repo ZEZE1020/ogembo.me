@@ -1,0 +1,85 @@
+---
+import { getCollection, getEntry, render, type CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import ThemeSwitch from '@/components/ThemeSwitch.astro';
+import KeyboardManager from '@/components/KeyboardManager.astro';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  return blogEntries.map((entry: CollectionEntry<'blog'>) => ({
+    params: { slug: entry.id }, props: { entry },
+  }));
+}
+
+const entry = await getEntry('blog', Astro.params.slug as string);
+if (!entry) {
+  return Astro.redirect('/blog');
+}
+const { Content } = await render(entry);
+---
+
+<Layout title={`${entry.data.title} | Godfrey Ogembo Blog`}>
+  <article class="max-w-3xl mx-auto p-4 md:p-8 mt-12 mb-20">
+    <div class="flex justify-between items-center mb-8">
+      <a href="/blog" class="inline-flex items-center gap-2 px-4 py-2 border border-skin-hue/20 rounded-full text-skin-muted hover:text-skin-base hover:bg-skin-hue/5 transition-all shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+          <span class="font-medium text-sm">All articles</span>
+      </a>
+      <div class="bg-skin-button-muted/50 px-3 py-1.5 rounded-full border border-skin-hue/10">
+        <ThemeSwitch />
+      </div>
+    </div>
+    
+    <header class="mb-14 border-b border-skin-hue/20 pb-10">
+      <div class="flex items-center gap-3 mb-6">
+         <time datetime={entry.data.pubDate.toISOString()} class="font-mono text-sm tracking-wide text-skin-muted bg-skin-hue/10 px-3 py-1.5 rounded-md border border-skin-hue/20">
+            {entry.data.pubDate.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+            })}
+         </time>
+      </div>
+
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-skin-base mb-6 leading-[1.1] tracking-tight">{entry.data.title}</h1>
+      <p class="text-xl md:text-2xl text-skin-muted leading-relaxed max-w-2xl">{entry.data.description}</p>
+      
+      {entry.data.tags && (
+          <div class="flex gap-2 flex-wrap mt-8">
+            {entry.data.tags.map((tag: string) => (
+              <span class="text-sm font-medium tracking-wide bg-skin-hue/10 text-skin-hue px-3 py-1.5 rounded-md border border-skin-hue/20">#{tag}</span>
+            ))}
+          </div>
+      )}
+    </header>
+
+    <div class="prose prose-invert prose-skin max-w-none 
+                prose-h1:text-skin-base prose-h1:font-bold prose-h1:tracking-tight
+                prose-h2:text-skin-base prose-h2:font-bold prose-h2:mt-12 prose-h2:tracking-tight
+                prose-h3:text-skin-base prose-h3:font-semibold prose-h3:tracking-tight
+                prose-p:text-skin-base prose-p:leading-relaxed prose-p:text-lg
+                prose-a:text-skin-hue prose-a:underline-offset-4 hover:prose-a:text-skin-button-accent-hover
+                prose-code:text-skin-hue prose-code:bg-skin-button-muted/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:font-medium
+                prose-pre:!bg-[#0d1117] prose-pre:border prose-pre:border-skin-hue/20 prose-pre:shadow-xl prose-pre:rounded-xl
+                prose-strong:text-skin-base prose-strong:font-bold
+                prose-ul:text-skin-base prose-li:my-2 prose-li:text-lg
+                prose-ol:text-skin-base
+                prose-blockquote:border-l-skin-hue prose-blockquote:bg-skin-button-muted/5 prose-blockquote:py-2 prose-blockquote:px-6 prose-blockquote:rounded-r-xl prose-blockquote:not-italic prose-blockquote:text-skin-muted
+                prose-img:rounded-2xl prose-img:shadow-2xl prose-img:mx-auto
+                prose-hr:border-skin-hue/20
+                ">
+      <Content />
+    </div>
+  </article>
+  <KeyboardManager />
+</Layout>
+
+<style is:global>
+  /* Reset inline code styles specifically inside pre blocks */
+  .prose pre code {
+    background-color: transparent !important;
+    padding: 0 !important;
+    color: inherit !important;
+    border-radius: 0 !important;
+  }
+</style>

@@ -1,0 +1,77 @@
+---
+import Layout from '@layouts/Neovim.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  return blogEntries.map(entry => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<Layout title={entry.data.title}>
+  <div class="neovim-blog-post max-w-4xl pb-20">
+    <div class="mb-8 nvim-line" data-href="/neovim/blog">
+      <span class="text-blue hover:underline cursor-pointer">← Back to :blog</span>
+    </div>
+    
+    <h1 class="text-2xl font-bold mb-4 text-green nvim-line">{entry.data.title}</h1>
+    <div class="text-gray-500 mb-8 nvim-line">
+      {entry.data.pubDate.toLocaleDateString()} — {entry.data.description}
+    </div>
+
+    <!-- Mapping Tailwind prose styles into simple Neovim CSS representation -->
+    <div class="nvim-content text-nvim-fg space-y-6">
+      <Content />
+    </div>
+  </div>
+</Layout>
+
+<style is:global>
+  /* Custom mappings for markdown rendered content in Neovim layout */
+  .nvim-content h1, .nvim-content h2, .nvim-content h3 {
+    @apply text-blue font-bold mt-8 mb-4;
+  }
+  .nvim-content h1 { @apply text-2xl; }
+  .nvim-content h2 { @apply text-xl; }
+  .nvim-content h3 { @apply text-lg; }
+  .nvim-content p {
+    @apply leading-relaxed mb-4 text-gray-300;
+  }
+  .nvim-content a {
+    @apply text-green underline decoration-dotted underline-offset-4 hover:bg-gray-800 p-1 rounded;
+  }
+  .nvim-content ul {
+    @apply list-disc pl-6 mb-4 text-gray-300;
+  }
+  .nvim-content li {
+    @apply mb-1;
+  }
+  .nvim-content blockquote {
+    @apply border-l-2 border-gray-600 pl-4 py-1 my-4 italic text-gray-500 bg-gray-900/50;
+  }
+  .nvim-content pre {
+    @apply bg-[#1a1b26] border border-gray-800 p-4 rounded mt-4 mb-6 overflow-x-auto;
+  }
+  .nvim-content p code, .nvim-content li code {
+    @apply bg-gray-800 text-green px-1.5 py-0.5 rounded text-sm;
+  }
+  .nvim-content img {
+    @apply max-w-full h-auto rounded border border-gray-800 my-6;
+  }
+</style>
+
+<script>
+  // Add nvim-line to elements inside content to allow cursor interaction
+  document.addEventListener('DOMContentLoaded', () => {
+    const headings = document.querySelectorAll('.nvim-content h1, .nvim-content h2, .nvim-content h3, .nvim-content p, .nvim-content pre');
+    headings.forEach(el => {
+      el.classList.add('nvim-line');
+    });
+  });
+</script>

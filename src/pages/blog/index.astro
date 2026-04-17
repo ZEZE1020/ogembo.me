@@ -1,0 +1,96 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from 'astro:content';
+
+import About from "@/components/sections/About.astro";
+import Hero from "@/components/sections/Hero.astro";
+import ThemeSwitch from "@/components/ThemeSwitch.astro";
+import NeovimButton from "@/components/neovim/Button.astro";
+import KeyboardManager from "@/components/KeyboardManager.astro";
+
+const posts = await getCollection('blog');
+console.log('POSTS: ', posts[0]);
+posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<Layout title="Engineering Blog | Godfrey Ogembo">
+  <main class="relative grid h-full max-w-7xl gap-12 p-8 max-sm:py-16 md:min-h-screen md:grid-cols-6 md:p-16 xl:gap-24 text-skin-base print:gap-4 mx-auto w-full">
+    
+    <div class="slide-enter space-y-6 ease-in md:col-span-2 print:grid print:grid-cols-5 print:space-y-0 md:sticky top-0 self-start h-min">
+      <Hero className="col-span-2" />
+      <About className="col-span-3" />
+      <ThemeSwitch />
+      <NeovimButton />
+    </div>
+
+    <div class="slide-enter-content md:col-span-4 print:hidden">
+      <div class="mb-14">
+        <a href="/" class="inline-flex items-center gap-2 px-4 py-2 border border-skin-hue/20 rounded-full text-skin-muted hover:text-skin-base hover:bg-skin-hue/5 transition-all mb-8 shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+          <span class="font-medium text-sm">Back to Portfolio</span>
+        </a>
+        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-skin-base mb-4">Engineering Blog</h1>
+        <p class="text-skin-muted text-lg max-w-2xl leading-relaxed">Perspectives on Python backend development, building secure enterprise cloud infrastructure, scaling AWS resources, and fostering engineering culture.</p>
+      </div>
+      
+      <div class="grid gap-8 sm:grid-cols-2">
+        {posts.map(post => (
+          <a href={`/blog/${post.id}`} class="group flex flex-col justify-between p-6 rounded-2xl border border-skin-hue/20 bg-skin-button-muted/5 hover:bg-skin-button-muted/10 hover:-translate-y-1 hover:shadow-2xl hover:border-skin-hue/40 transition-all duration-300">
+            <div>
+              <div class="flex items-center gap-3 mb-4">
+                <time datetime={post.data.pubDate.toISOString()} class="text-sm font-mono text-skin-muted bg-skin-hue/10 px-2 py-1 rounded-md">
+                  {post.data.pubDate.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
+                </time>
+              </div>
+              <h2 class="text-2xl font-bold mb-3 text-skin-base group-hover:text-skin-hue transition-colors leading-tight">{post.data.title}</h2>
+              <p class="text-skin-muted mb-6 line-clamp-3 leading-relaxed">{post.data.description}</p>
+            </div>
+            {post.data.tags && (
+               <div class="mt-auto flex gap-2 flex-wrap pb-2">
+                 {post.data.tags.map((tag: string) => (
+                   <span class="text-xs font-medium tracking-wide bg-skin-hue/10 text-skin-hue px-2.5 py-1 rounded-md border border-skin-hue/20">#{tag}</span>
+                 ))}
+               </div>
+            )}
+          </a>
+        ))}
+      </div>
+    </div>
+  </main>
+  <KeyboardManager />
+</Layout>
+
+<style is:global>
+  * {
+    scrollbar-color: var(--color-button-muted) var(--color-fill);
+  }
+
+  @keyframes slide-enter {
+    0% {
+      transform: translateY(10px);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .slide-enter,
+    .slide-enter-content > *:not(:has(.table-of-contents)) {
+      --enter-stage: 0;
+      --enter-step: 150ms;
+      --enter-initial: 0ms;
+      animation: slide-enter 1s both 1;
+      animation-delay: calc(
+        var(--enter-initial) + var(--enter-stage) * var(--enter-step)
+      );
+    }
+
+    .slide-enter-content > *:nth-child(1) {
+      --enter-stage: 1 !important;
+    }
+  }
+</style>
