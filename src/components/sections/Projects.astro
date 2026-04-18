@@ -25,7 +25,7 @@ import { projects } from "@cv";
                       <a
                         class="group flex items-center gap-[6px] text-lg decoration-dotted underline-offset-[5px] hover:text-skin-hue hover:underline transition-all sm:hover:cursor-none"
                         href={url}
-                        title={`Ver ${name}`}
+                        title={`View ${name}`}
                         target="_blank"
                       >
                         {name}
@@ -53,6 +53,19 @@ import { projects } from "@cv";
                   </a>
                 )}
               </div>
+
+              {url && (
+                <div class="mt-4 mb-2 overflow-hidden rounded-md border border-skin-hue/20 aspect-video w-full flex-shrink-0 cursor-none" data-ccursor="lift">
+                  <a href={url} target="_blank" rel="noopener">
+                    <img 
+                      src={`https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&embed=screenshot.url`} 
+                      alt={`${name} preview`} 
+                      loading="lazy"
+                      class="object-cover w-full h-full hover:scale-105 transition-transform duration-500 ease-in-out" 
+                    />
+                  </a>
+                </div>
+              )}
 
               <p data-ccursor="noPadding" class='relative z-10 py-3 text-sm text-skin-base'>
                 {description}
