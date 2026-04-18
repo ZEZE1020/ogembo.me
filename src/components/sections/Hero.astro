@@ -59,7 +59,7 @@ const ProfileImage = _images[_imagePath] ? (await _images[_imagePath]()).default
       <div class="hidden print:block"><b>Contact: </b>{email}</div>
     </section>
   </div>
-  <div class='flex gap-6 print:hidden'>
+  <div class='flex flex-col sm:flex-row gap-6 print:hidden'>
         <div
           aria-label="Social media"
           class="flex group/social flex-wrap justify-evenly sm:h-40 sm:w-40 w-full h-min sm:flex-col rounded-3xl p-4 transition-all rotate-0 bg-skin-muted sm:bg-skin-button-muted   sm:hover:bg-skin-muted"
@@ -91,10 +91,10 @@ const ProfileImage = _images[_imagePath] ? (await _images[_imagePath]()).default
         </div>
         <a
           href="/blog"
-          class="flex h-40 w-40 flex-col place-items-center rounded-3xl sm:bg-skin-muted p-4 transition-all bg-skin-muted sm:hover:bg-skin-button-accent text-skin-hue sm:hover:text-skin-inverted print:hidden" data-ccursor="lift"
+          class="flex h-16 sm:h-40 w-full sm:w-40 flex-row sm:flex-col items-center justify-center rounded-3xl sm:bg-skin-muted p-4 transition-all bg-skin-muted sm:hover:bg-skin-button-accent text-skin-hue sm:hover:text-skin-inverted print:hidden" data-ccursor="lift"
         >
-          <Icon name='ri:article-line' class='flex-1 w-1/2'/>
-          <p class="font-mono font-bold text-center mt-2">Read Blog</p>
+          <Icon name='ri:article-line' class='w-8 h-8 sm:flex-1 sm:w-1/2'/>
+          <p class="font-mono font-bold text-center ml-2 sm:ml-0 sm:mt-2">Read Blog</p>
         </a>
   </div>
 </Section>
