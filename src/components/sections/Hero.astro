@@ -3,6 +3,10 @@ import { basics } from '@cv'
 import Section from '@/components/Section.astro'
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
+
+const { pathname } = Astro.url;
+const isBlogPage = pathname.startsWith('/blog') || pathname.startsWith('/neovim/blog');
+
 const { name, animated_secondary_initial_label, animated_main_label,image, location, email } = basics
 const { city, region } = location
 
@@ -90,11 +94,11 @@ const ProfileImage = _images[_imagePath] ? (await _images[_imagePath]()).default
           <p class="font-mono font-bold text-center">Open options</p>
         </div>
         <a
-          href="/blog"
+          href={isBlogPage ? "/" : "/blog"}
           class="flex h-16 sm:h-40 w-full sm:w-40 flex-row sm:flex-col items-center justify-center rounded-3xl sm:bg-skin-muted p-4 transition-all bg-skin-muted sm:hover:bg-skin-button-accent text-skin-hue sm:hover:text-skin-inverted print:hidden" data-ccursor="lift"
         >
-          <Icon name='ri:article-line' class='w-8 h-8 sm:flex-1 sm:w-1/2'/>
-          <p class="font-mono font-bold text-center ml-2 sm:ml-0 sm:mt-2">Read Blog</p>
+          <Icon name={isBlogPage ? 'ri:briefcase-4-line' : 'ri:article-line'} class='w-8 h-8 sm:flex-1 sm:w-1/2'/>
+          <p class="font-mono font-bold text-center ml-2 sm:ml-0 sm:mt-2">{isBlogPage ? 'Portfolio' : 'Read Blog'}</p>
         </a>
   </div>
 </Section>
