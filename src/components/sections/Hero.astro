@@ -63,17 +63,17 @@ const ProfileImage = _images[_imagePath] ? (await _images[_imagePath]()).default
       <div class="hidden print:block"><b>Contact: </b>{email}</div>
     </section>
   </div>
-  <div class='flex flex-col sm:flex-row gap-6 print:hidden'>
+  <div class='flex flex-col sm:grid sm:grid-cols-3 gap-6 w-full print:hidden'>
         <div
           aria-label="Social media"
-          class="flex group/social flex-wrap justify-evenly sm:h-40 sm:w-40 w-full h-min sm:flex-col rounded-3xl p-4 transition-all rotate-0 bg-skin-muted sm:bg-skin-button-muted   sm:hover:bg-skin-muted"
+          class="grid grid-cols-4 sm:grid-cols-2 gap-4 group/social w-full h-16 sm:h-auto sm:aspect-square rounded-3xl p-4 transition-all rotate-0 bg-skin-muted sm:bg-skin-button-muted sm:hover:bg-skin-muted items-center justify-items-center"
         >
           {
             basics.profiles.map(({network, url, icon, color}) => {
               return (
                 <a
                   data-ccursor
-                  class="flex flex-col sm:basis-1/2 items-center justify-center rounded-md hover:cursor-none"
+                  class="flex flex-col w-full h-full min-h-[3rem] items-center justify-center rounded-md hover:cursor-none"
                   href={url}
                   target="_blank"
                   rel="noreferrer noopener"
@@ -88,16 +88,16 @@ const ProfileImage = _images[_imagePath] ? (await _images[_imagePath]()).default
           }
         </div>
         <div
-          class="footer-button flex h-40 w-40 flex-col place-items-center rounded-3xl sm:bg-skin-muted p-4 transition-all rotate-0 bg-skin-muted  sm:hover:bg-skin-button-accent text-skin-hue sm:hover:text-skin-inverted max-sm:hidden print:hidden" data-ccursor="lift"
+          class="footer-button flex h-16 sm:h-auto sm:aspect-square w-full flex-col place-items-center justify-center rounded-3xl sm:bg-skin-muted p-4 transition-all rotate-0 bg-skin-muted sm:hover:bg-skin-button-accent text-skin-hue sm:hover:text-skin-inverted max-sm:hidden print:hidden" data-ccursor="lift"
         >
-          <Icon name='ri:command-fill' class='flex-1 w-1/2'/>
-          <p class="font-mono font-bold text-center">Open options</p>
+          <Icon name='ri:command-fill' class='w-8 h-8 sm:w-16 sm:h-16'/>
+          <p class="font-mono font-bold text-center sm:mt-2">Open options</p>
         </div>
         <a
           href={isBlogPage ? "/" : "/blog"}
-          class="flex h-16 sm:h-40 w-full sm:w-40 flex-row sm:flex-col items-center justify-center rounded-3xl sm:bg-skin-muted p-4 transition-all bg-skin-muted sm:hover:bg-skin-button-accent text-skin-hue sm:hover:text-skin-inverted print:hidden" data-ccursor="lift"
+          class="flex w-full h-16 sm:h-auto sm:aspect-square flex-row sm:flex-col items-center justify-center rounded-3xl sm:bg-skin-muted p-4 transition-all bg-skin-muted sm:hover:bg-skin-button-accent text-skin-hue sm:hover:text-skin-inverted print:hidden" data-ccursor="lift"
         >
-          <Icon name={isBlogPage ? 'ri:briefcase-4-line' : 'ri:article-line'} class='w-8 h-8 sm:flex-1 sm:w-1/2'/>
+          <Icon name={isBlogPage ? 'ri:briefcase-4-line' : 'ri:article-line'} class='w-8 h-8 sm:w-16 sm:h-16'/>
           <p class="font-mono font-bold text-center ml-2 sm:ml-0 sm:mt-2">{isBlogPage ? 'Portfolio' : 'Read Blog'}</p>
         </a>
   </div>
