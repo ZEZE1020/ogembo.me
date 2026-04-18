@@ -37,6 +37,13 @@
         "color": "#D44638",
         "username": "ogembogodfrey75",
         "url": "mailto:ogembogodfrey75@gmail.com"
+      },
+      {
+        "network": "X",
+        "icon": "ri:twitter-x-fill",
+        "color": "#000000",
+        "username": "ogembo_godfrey",
+        "url": "https://x.com/ogembo_godfrey"
       }
     ]
   },
