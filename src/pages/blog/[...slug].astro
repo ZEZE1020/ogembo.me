@@ -19,6 +19,9 @@ const { Content } = await render(entry);
 ---
 
 <Layout title={`${entry.data.title} | Godfrey Ogembo Blog`}>
+  <div id="progress-container" class="fixed top-0 left-0 w-full h-1.5 bg-skin-button-muted/20 z-50">
+    <div id="progress-bar" class="h-full bg-skin-hue w-0 transition-all duration-150 ease-out"></div>
+  </div>
   <article class="max-w-3xl mx-auto p-4 md:p-8 mt-12 mb-20">
     <div class="flex justify-between items-center mb-8">
       <a href="/blog" class="inline-flex items-center gap-2 px-4 py-2 border border-skin-hue/20 rounded-full text-skin-muted hover:text-skin-base hover:bg-skin-hue/5 transition-all shadow-sm">
@@ -83,3 +86,20 @@ const { Content } = await render(entry);
     border-radius: 0 !important;
   }
 </style>
+
+<script>
+  function updateProgress() {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    const progressBar = document.getElementById("progress-bar");
+    if (progressBar) {
+      progressBar.style.width = scrolled + "%";
+    }
+  }
+
+  // Add scroll event listener
+  window.addEventListener('scroll', updateProgress);
+  // Update initially in case deep linked
+  updateProgress();
+</script>

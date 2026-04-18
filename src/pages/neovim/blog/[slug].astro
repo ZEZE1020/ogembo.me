@@ -15,6 +15,9 @@ const { Content } = await render(entry);
 ---
 
 <Layout title={entry.data.title}>
+  <div id="progress-container" class="fixed top-0 left-0 w-full h-1 bg-nvim-bg z-50">
+    <div id="progress-bar" class="h-full bg-green w-0 transition-all duration-150 ease-out"></div>
+  </div>
   <div class="neovim-blog-post max-w-4xl pb-20">
     <div class="mb-8 nvim-line" data-href="/neovim/blog">
       <span class="text-blue hover:underline cursor-pointer">← Back to :blog</span>
@@ -67,6 +70,21 @@ const { Content } = await render(entry);
 </style>
 
 <script>
+  function updateProgress() {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    // Cap at 100% just in case of weird browser bounce scrolling
+    const scrolled = Math.min((winScroll / height) * 100, 100); 
+    const progressBar = document.getElementById("progress-bar");
+    if (progressBar) {
+      progressBar.style.width = scrolled + "%";
+    }
+  }
+
+  // Add event listener for scroll
+  window.addEventListener('scroll', updateProgress);
+  updateProgress();
+
   // Add nvim-line to elements inside content to allow cursor interaction
   document.addEventListener('DOMContentLoaded', () => {
     const headings = document.querySelectorAll('.nvim-content h1, .nvim-content h2, .nvim-content h3, .nvim-content p, .nvim-content pre');
