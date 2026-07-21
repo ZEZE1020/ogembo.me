@@ -1,6 +1,6 @@
 ---
 import Layout from '@layouts/Neovim.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const talkEntries = await getCollection('talks');
@@ -11,7 +11,7 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 ---
 
 <Layout title={entry.data.title}>
@@ -25,7 +25,7 @@ const { Content } = await entry.render();
     
     <h1 class="text-2xl font-bold mb-4 text-green nvim-line">{entry.data.title}</h1>
     <div class="text-gray-500 mb-8 nvim-line">
-      {entry.data.pubDate.toLocaleDateString()} — {entry.data.description}
+      {entry.data.date.toLocaleDateString()}
     </div>
 
     <div class="nvim-content text-nvim-fg space-y-6">

@@ -3,7 +3,7 @@ import Layout from '@layouts/Neovim.astro';
 import { getCollection } from 'astro:content';
 
 const allTalks = await getCollection('talks');
-const sortedTalks = allTalks.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+const sortedTalks = allTalks.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
 <Layout title="My Talks">
@@ -12,13 +12,12 @@ const sortedTalks = allTalks.sort((a, b) => b.data.pubDate.getTime() - a.data.pu
 
     <div class="space-y-8">
       {sortedTalks.map((talk) => (
-        <a href={`/neovim/talks/${talk.slug}`} class="block p-4 border border-gray-800 rounded-lg hover:bg-gray-900 transition-colors nvim-line">
+        <a href={`/neovim/talks/${talk.id}`} class="block p-4 border border-gray-800 rounded-lg hover:bg-gray-900 transition-colors nvim-line">
           <h2 class="text-xl font-semibold text-blue">{talk.data.title}</h2>
           <p class="text-gray-400 text-sm mt-1">
-            {talk.data.pubDate.toLocaleDateString()}
+            {talk.data.date.toLocaleDateString()}
             {talk.data.event && ` — ${talk.data.event}`}
           </p>
-          <p class="text-gray-300 mt-2">{talk.data.description}</p>
         </a>
       ))}
     </div>

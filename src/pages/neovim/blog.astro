@@ -28,7 +28,7 @@ posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
         
         {post.data.tags && (
           <ul class="flex flex-wrap gap-2 mt-4" aria-label="Tags">
-            {post.data.tags.map((tag: string, index) => (
+            {post.data.tags.map((tag: string) => (
               <li class=" cursor-default bg-transparent border-nvim-green/60 text-green flex items-center border-solid border rounded-md px-2 py-1 text-xs backdrop-blur-sm">
                 <span>#{tag}</span>
               </li>
