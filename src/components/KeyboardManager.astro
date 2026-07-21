@@ -38,7 +38,7 @@ const profilesInfo = profiles.map(({ network, url }) => {
     Press <kbd>Ctrl</kbd> + <kbd>K</kbd> to open the command palette.
   </div>
 </footer>
-<div class='footer-button print:hidden'>
+<div class='footer-button print:hidden' data-command-palette-trigger>
   <Icon name='ri:command-fill' width={20} height={20} class="text-skin-hue"/>
 </div>
 
@@ -116,6 +116,30 @@ const profilesInfo = profiles.map(({ network, url }) => {
       },
     },
     {
+      id: 'talks',
+      title: 'View my Talks',
+      icon: `<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+</svg>`,
+      hotkey: 'ctrl+Y',
+      section: 'Navigation',
+      handler: () => {
+        window.location.href = "/talks";
+      },
+    },
+    {
+      id: 'series',
+      title: 'Browse my Series',
+      icon: `<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+</svg>`,
+      hotkey: 'ctrl+S',
+      section: 'Navigation',
+      handler: () => {
+        window.location.href = "/series";
+      },
+    },
+    {
       id: 'contact',
       title: 'Contact Me',
       icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M3.75 5.25L3 6V18L3.75 18.75H20.25L21 18V6L20.25 5.25H3.75ZM4.5 7.6955V17.25H19.5V7.69525L11.9999 14.5136L4.5 7.6955ZM18.3099 6.75H5.68986L11.9999 12.4864L18.3099 6.75Z" fill="currentColor"></path> </g></svg>`,
@@ -132,17 +156,9 @@ const profilesInfo = profiles.map(({ network, url }) => {
     ...data,
   ])
 
-  document.querySelectorAll('.footer-button').forEach(button => {
+  document.querySelectorAll('[data-command-palette-trigger]').forEach(button => {
     button.addEventListener('click', () => {
-      let event = new KeyboardEvent('keydown', {
-        key: 'K',
-        code: 'KeyK',
-        ctrlKey: true,
-        altKey: false,
-        shiftKey: false,
-        metaKey: false,
-      })
-      document.dispatchEvent(event)
+      hotkeypad.open()
     })
   })
   
