@@ -115,6 +115,12 @@ const keywords = [
 		<Sidebar />
 		<main class="flex-1 overflow-y-auto p-2">
 			<Icon id="cursor" name='mdi:minus' width={24} height={24} class={`animate-pulse absolute z-50 text-lg top-[-100vh] rotate-90`}></Icon>
+			<nav aria-label="Neovim sections" class="sticky top-0 z-40 mb-8 flex flex-wrap gap-x-5 gap-y-2 border-b border-gray-800 bg-nvim-bg/95 px-1 py-3 text-sm backdrop-blur">
+				<a href="/neovim" data-href="/neovim" class="nvim-line text-gray-400 hover:text-green">~/home</a>
+				<a href="/neovim/blog" data-href="/neovim/blog" class="nvim-line text-gray-400 hover:text-green">:blog</a>
+				<a href="/neovim/talks" data-href="/neovim/talks" class="nvim-line text-gray-400 hover:text-green">:talks</a>
+				<a href="/neovim/series" data-href="/neovim/series" class="nvim-line text-gray-400 hover:text-green">:series</a>
+			</nav>
 			<slot />
 		</main>
 	</div>

@@ -98,6 +98,12 @@ function handleCommand(command: string) {
       case 'blog':
         window.location.href = '/neovim/blog';
         break;
+      case 'talks':
+        window.location.href = '/neovim/talks';
+        break;
+      case 'series':
+        window.location.href = '/neovim/series';
+        break;
       case 'about':
         window.location.href = '/neovim/about';
         break;
