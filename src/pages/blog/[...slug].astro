@@ -85,6 +85,23 @@ const { Content } = await render(entry);
     color: inherit !important;
     border-radius: 0 !important;
   }
+
+  .copy-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+  }
+
+  .copy-button:hover {
+    background-color: #3a3a3a;
+  }
 </style>
 
 <script>
@@ -102,4 +119,29 @@ const { Content } = await render(entry);
   window.addEventListener('scroll', updateProgress);
   // Update initially in case deep linked
   updateProgress();
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const preBlocks = document.querySelectorAll('pre');
+
+    preBlocks.forEach(pre => {
+      const code = pre.querySelector('code');
+      if (!code) return;
+
+      const copyButton = document.createElement('button');
+      copyButton.textContent = 'Copy';
+      copyButton.classList.add('copy-button');
+
+      copyButton.addEventListener('click', () => {
+        navigator.clipboard.writeText(code.innerText).then(() => {
+          copyButton.textContent = 'Copied!';
+          setTimeout(() => {
+            copyButton.textContent = 'Copy';
+          }, 2000);
+        });
+      });
+
+      pre.style.position = 'relative';
+      pre.appendChild(copyButton);
+    });
+  });
 </script>
