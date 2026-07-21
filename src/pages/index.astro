@@ -6,6 +6,7 @@ import Experience from "@/components/sections/Experience.astro";
 import Hero from "@/components/sections/Hero.astro";
 import Projects from "@/components/sections/Projects.astro";
 import Skills from "@/components/sections/Skills.astro";
+import ContentLinks from "@/components/sections/ContentLinks.astro";
 import KeyboardManager from "@/components/KeyboardManager.astro";
 import ThemeSwitch from "@/components/ThemeSwitch.astro";
 import NeovimButton from "../components/neovim/Button.astro";
@@ -26,6 +27,7 @@ import NeovimButton from "../components/neovim/Button.astro";
     <div
       class="slide-enter-content space-y-12 md:col-span-4 print:grid print:grid-cols-5 print:grid-flow-row print:gap-2 print:space-y-0"
     >
+      <ContentLinks className="print:hidden" />
       <Experience className="print:col-span-3" />
       {
         (

@@ -1,0 +1,43 @@
+---
+import Section from '@/components/Section.astro';
+import { Icon } from 'astro-icon/components';
+
+const links = [
+  {
+    title: 'Blog',
+    description: 'Engineering notes and long-form writing',
+    href: '/blog',
+    icon: 'ri:article-line',
+  },
+  {
+    title: 'Talks',
+    description: 'Presentations, slides, and recordings',
+    href: '/talks',
+    icon: 'ri:presentation-line',
+  },
+  {
+    title: 'Series',
+    description: 'Curated paths through related content',
+    href: '/series',
+    icon: 'ri:stack-line',
+  },
+];
+---
+
+<Section title="Explore" className={Astro.props.className}>
+  <nav aria-label="Published content" class="grid gap-3 sm:grid-cols-3 print:hidden">
+    {links.map(link => (
+      <a
+        href={link.href}
+        data-ccursor="lift"
+        class="group flex min-h-32 flex-col justify-between rounded-md bg-skin-button-muted/50 p-4 shadow-sm ring-1 ring-skin-muted transition-all duration-200 hover:bg-skin-muted hover:ring-2 hover:ring-skin-hue sm:hover:cursor-none"
+      >
+        <Icon name={link.icon} width={28} height={28} class="text-skin-hue transition-transform group-hover:-translate-y-1" />
+        <div>
+          <h4 class="font-semibold group-hover:text-skin-hue">{link.title}</h4>
+          <p class="mt-1 text-xs text-skin-muted">{link.description}</p>
+        </div>
+      </a>
+    ))}
+  </nav>
+</Section>
