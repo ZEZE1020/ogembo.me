@@ -13,7 +13,7 @@ const blogCollection = defineCollection({
 });
 
 const talksCollection = defineCollection({
-  loader: glob({ pattern: "**/*.mdx", base: "src/content/talks" }),
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "src/content/talks" }),
   schema: z.object({
     title: z.string(),
     date: z.date(),
@@ -24,9 +24,14 @@ const talksCollection = defineCollection({
 });
 
 const seriesCollection = defineCollection({
-  loader: glob({ pattern: "**/*.mdx", base: "src/content/series" }),
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "src/content/series" }),
   schema: z.object({
     title: z.string(),
+    description: z.string(),
+    items: z.array(z.object({
+      type: z.string(),
+      slug: z.string(),
+    })).default([]),
   }),
 });
 
