@@ -109,6 +109,13 @@ const breadcrumbSchema = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script is:inline>
+      (() => {
+        const savedMode = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.classList.toggle('dark', savedMode === 'dark' || (!savedMode && prefersDark));
+      })();
+    </script>
     
     <!-- Primary Meta Tags -->
     <title>{title}</title>
@@ -160,6 +167,9 @@ const breadcrumbSchema = {
     <meta name="google-site-verification" content="oi4G-5FCwNn5m9MvSyjyBxVatgwi8KT_KtVuC9Pckmg" />
   </head>
   <body data-theme={theme} class="relative bg-skin-fill font-sans">
+    <script is:inline>
+      document.body.dataset.theme = localStorage.getItem('data-theme') || document.body.dataset.theme || 'orange';
+    </script>
     <div class="absolute top-0 -z-10 h-full w-full print:hidden">
       <div class="absolute bottom-auto left-[20%] right-auto top-0 h-[200px] w-[200px] -translate-x-[30%] translate-y-[20%] rounded-full bg-skin-hue/10 blur-[80px] invert-0 dark:bg-white/5"></div>
     </div>
