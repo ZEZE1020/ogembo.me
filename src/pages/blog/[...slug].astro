@@ -24,9 +24,9 @@ const { Content } = await render(entry);
   </div>
   <article class="max-w-3xl mx-auto p-4 md:p-8 mt-12 mb-20">
     <div class="flex justify-between items-center mb-8">
-      <a href="/blog" class="inline-flex items-center gap-2 px-4 py-2 border border-skin-hue/20 rounded-full text-skin-muted hover:text-skin-base hover:bg-skin-hue/5 transition-all shadow-sm">
+      <a href="/blog" data-context-back class="inline-flex items-center gap-2 px-4 py-2 border border-skin-hue/20 rounded-full text-skin-muted hover:text-skin-base hover:bg-skin-hue/5 transition-all shadow-sm">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
-          <span class="font-medium text-sm">All articles</span>
+          <span data-context-back-label class="font-medium text-sm">All articles</span>
       </a>
       <div class="bg-skin-button-muted/50 px-3 py-1.5 rounded-full border border-skin-hue/10">
         <ThemeSwitch />
@@ -144,4 +144,14 @@ const { Content } = await render(entry);
       pre.appendChild(copyButton);
     });
   });
+</script>
+
+<script>
+  const returnTo = new URLSearchParams(window.location.search).get('returnTo');
+  const backLink = document.querySelector<HTMLAnchorElement>('[data-context-back]');
+  const backLabel = backLink?.querySelector<HTMLElement>('[data-context-back-label]');
+  if (returnTo?.startsWith('/') && !returnTo.startsWith('//') && backLink) {
+    backLink.href = returnTo;
+    if (backLabel) backLabel.textContent = 'Back to series';
+  }
 </script>

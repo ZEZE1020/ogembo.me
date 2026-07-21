@@ -12,6 +12,39 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+
+const [blogEntries, talkEntries] = await Promise.all([
+  getCollection('blog'),
+  getCollection('talks'),
+]);
+
+const contentByType = {
+  blog: new Map(blogEntries.map(item => [item.id, {
+    title: item.data.title,
+    description: item.data.description,
+    href: `/neovim/blog/${item.id}`,
+    label: 'Blog',
+  }])),
+  talk: new Map(talkEntries.map(item => [item.id, {
+    title: item.data.title,
+    description: item.data.event ?? 'Talk',
+    href: `/neovim/talks/${item.id}`,
+    label: 'Talk',
+  }])),
+} as const;
+
+const seriesItems = entry.data.items.map((item, index) => {
+  const resolver = contentByType[item.type as keyof typeof contentByType];
+  const content = resolver?.get(item.slug);
+
+  return {
+    ...item,
+    index: index + 1,
+    content,
+  };
+});
+
+const returnTo = `/neovim/series/${entry.id}`;
 ---
 
 <Layout title={entry.data.title}>
@@ -24,13 +57,30 @@ const { Content } = await render(entry);
     </div>
     
     <h1 class="text-2xl font-bold mb-4 text-green nvim-line">{entry.data.title}</h1>
-    <div class="text-gray-500 mb-8 nvim-line">
-      A post in the "{entry.data.title}" series.
-    </div>
+    <p class="text-gray-500 mb-8 nvim-line">{entry.data.description}</p>
 
-    <div class="nvim-content text-nvim-fg space-y-6">
+    <div class="nvim-content text-nvim-fg mb-10 space-y-6">
       <Content />
     </div>
+
+    <ol class="space-y-4" aria-label={`Items in ${entry.data.title}`}>
+      {seriesItems.map((item) => item.content ? (
+        <li class="nvim-line" data-href={`${item.content.href}?returnTo=${encodeURIComponent(returnTo)}`}>
+          <a href={`${item.content.href}?returnTo=${encodeURIComponent(returnTo)}`} class="block rounded-lg border border-gray-800 p-4 transition-colors hover:bg-gray-900">
+            <div class="flex items-center gap-3 text-xs text-green">
+              <span>{String(item.index).padStart(2, '0')}</span>
+              <span>{item.content.label}</span>
+            </div>
+            <h2 class="mt-2 text-xl font-semibold text-blue">{item.content.title}</h2>
+            <p class="mt-2 text-sm text-gray-400">{item.content.description}</p>
+          </a>
+        </li>
+      ) : (
+        <li class="rounded-lg border border-red-900/60 p-4 text-sm text-red-300">
+          Could not find {item.type}:{item.slug}
+        </li>
+      ))}
+    </ol>
   </div>
 </Layout>
 

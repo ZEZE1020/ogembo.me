@@ -1,0 +1,67 @@
+---
+import Layout from '@layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+import ThemeSwitch from '@/components/ThemeSwitch.astro';
+import KeyboardManager from '@/components/KeyboardManager.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('series');
+  return entries.map(entry => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const [blogs, talks] = await Promise.all([getCollection('blog'), getCollection('talks')]);
+
+const contentByType = {
+  blog: new Map(blogs.map(item => [item.id, {
+    title: item.data.title,
+    description: item.data.description,
+    href: `/blog/${item.id}`,
+    label: 'Blog',
+  }])),
+  talk: new Map(talks.map(item => [item.id, {
+    title: item.data.title,
+    description: item.data.event ?? 'Talk',
+    href: `/talks/${item.id}`,
+    label: 'Talk',
+  }])),
+} as const;
+
+const items = entry.data.items.map((item, index) => ({
+  ...item,
+  index: index + 1,
+  content: contentByType[item.type as keyof typeof contentByType]?.get(item.slug),
+}));
+
+const returnTo = `/series/${entry.id}`;
+---
+
+<Layout title={`${entry.data.title} | Series`}>
+  <main class="mx-auto min-h-screen w-full max-w-3xl px-6 py-16 text-skin-base sm:px-10">
+    <div class="flex items-center justify-between gap-4">
+      <a href="/series" class="inline-flex items-center gap-2 rounded-full border border-skin-hue/20 px-4 py-2 text-sm text-skin-muted shadow-sm transition-all hover:bg-skin-hue/5 hover:text-skin-base">← All series</a>
+      <div class="rounded-full border border-skin-hue/10 bg-skin-button-muted/50 px-3 py-1.5"><ThemeSwitch /></div>
+    </div>
+    <header class="mt-8 mb-8">
+      <h1 class="text-4xl font-bold">{entry.data.title}</h1>
+      <p class="mt-4 text-skin-muted">{entry.data.description}</p>
+    </header>
+    <div class="prose prose-invert prose-skin mb-10 max-w-none prose-headings:text-skin-base prose-p:text-skin-base prose-a:text-skin-hue prose-strong:text-skin-base prose-li:text-skin-base"><Content /></div>
+
+    <ol class="space-y-4">
+      {items.map(item => item.content ? (
+        <li>
+          <a href={`${item.content.href}?returnTo=${encodeURIComponent(returnTo)}`} data-ccursor="lift" class="group block rounded-2xl border border-skin-hue/20 bg-skin-button-muted/5 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-skin-hue/40 hover:bg-skin-button-muted/10 hover:shadow-2xl sm:hover:cursor-none">
+            <p class="text-xs text-skin-hue">{String(item.index).padStart(2, '0')} · {item.content.label}</p>
+            <h2 class="mt-2 text-xl font-semibold">{item.content.title}</h2>
+            <p class="mt-2 text-sm text-skin-muted">{item.content.description}</p>
+          </a>
+        </li>
+      ) : (
+        <li class="rounded-xl border border-red-500/40 p-5 text-sm text-red-500">Could not find {item.type}:{item.slug}</li>
+      ))}
+    </ol>
+  </main>
+  <KeyboardManager />
+</Layout>
