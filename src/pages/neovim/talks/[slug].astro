@@ -19,8 +19,8 @@ const { Content } = await render(entry);
     <div id="progress-bar" class="h-full bg-green w-0 transition-all duration-150 ease-out"></div>
   </div>
   <div class="neovim-blog-post max-w-4xl pb-20">
-    <div class="mb-8 nvim-line" data-href="/neovim/talks">
-      <span class="text-blue hover:underline cursor-pointer">← Back to :talks</span>
+    <div class="mb-8 nvim-line" data-href="/neovim/talks" data-context-back>
+      <span data-context-back-label class="text-blue hover:underline cursor-pointer">← Back to :talks</span>
     </div>
 
     <h1 class="text-2xl font-bold mb-4 text-green nvim-line">{entry.data.title}</h1>
@@ -123,4 +123,14 @@ const { Content } = await render(entry);
       }
     });
   });
+</script>
+
+<script>
+  const returnTo = new URLSearchParams(window.location.search).get('returnTo');
+  const backLine = document.querySelector<HTMLElement>('[data-context-back]');
+  const backLabel = backLine?.querySelector<HTMLElement>('[data-context-back-label]');
+  if (returnTo?.startsWith('/neovim/series/') && backLine) {
+    backLine.dataset.href = returnTo;
+    if (backLabel) backLabel.textContent = '← Back to :series';
+  }
 </script>

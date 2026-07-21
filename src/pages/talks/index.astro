@@ -1,0 +1,33 @@
+---
+import Layout from '@layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import ThemeSwitch from '@/components/ThemeSwitch.astro';
+import KeyboardManager from '@/components/KeyboardManager.astro';
+
+const talks = await getCollection('talks');
+talks.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Layout title="Talks | Godfrey Ogembo">
+  <main class="mx-auto min-h-screen w-full max-w-5xl px-6 py-16 text-skin-base sm:px-10">
+    <header class="mb-14">
+      <div class="mb-8 flex items-center justify-between gap-4">
+        <a href="/" class="inline-flex items-center gap-2 rounded-full border border-skin-hue/20 px-4 py-2 text-sm text-skin-muted shadow-sm transition-all hover:bg-skin-hue/5 hover:text-skin-base">← Portfolio</a>
+        <div class="rounded-full border border-skin-hue/10 bg-skin-button-muted/50 px-3 py-1.5"><ThemeSwitch /></div>
+      </div>
+      <h1 class="text-4xl font-extrabold tracking-tight md:text-5xl">Talks</h1>
+      <p class="mt-4 max-w-2xl text-lg leading-relaxed text-skin-muted">Presentations, slides, and recordings.</p>
+    </header>
+
+    <div class="grid gap-5 sm:grid-cols-2">
+      {talks.map(talk => (
+        <a href={`/talks/${talk.id}`} data-ccursor="lift" class="group rounded-2xl border border-skin-hue/20 bg-skin-button-muted/5 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-skin-hue/40 hover:bg-skin-button-muted/10 hover:shadow-2xl sm:hover:cursor-none">
+          <time datetime={talk.data.date.toISOString()} class="rounded-md bg-skin-hue/10 px-2 py-1 font-mono text-xs text-skin-muted">{talk.data.date.toLocaleDateString()}</time>
+          <h2 class="mt-4 text-xl font-bold transition-colors group-hover:text-skin-hue">{talk.data.title}</h2>
+          {talk.data.event && <p class="mt-2 text-sm text-skin-muted">{talk.data.event}</p>}
+        </a>
+      ))}
+    </div>
+  </main>
+  <KeyboardManager />
+</Layout>

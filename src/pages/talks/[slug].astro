@@ -1,0 +1,47 @@
+---
+import Layout from '@layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+import ThemeSwitch from '@/components/ThemeSwitch.astro';
+import KeyboardManager from '@/components/KeyboardManager.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('talks');
+  return entries.map(entry => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<Layout title={`${entry.data.title} | Talks`}>
+  <main class="mx-auto min-h-screen w-full max-w-3xl px-6 py-16 text-skin-base sm:px-10">
+    <div class="flex items-center justify-between gap-4">
+      <a href="/talks" data-context-back class="inline-flex items-center gap-2 rounded-full border border-skin-hue/20 px-4 py-2 text-sm text-skin-muted shadow-sm transition-all hover:bg-skin-hue/5 hover:text-skin-base"><span data-context-back-label>← All talks</span></a>
+      <div class="rounded-full border border-skin-hue/10 bg-skin-button-muted/50 px-3 py-1.5"><ThemeSwitch /></div>
+    </div>
+    <article class="mt-8">
+      <header class="mb-10 border-b border-skin-hue/20 pb-8">
+        <h1 class="text-4xl font-bold">{entry.data.title}</h1>
+        <p class="mt-4 text-skin-muted">
+          {entry.data.date.toLocaleDateString()}{entry.data.event && ` — ${entry.data.event}`}
+        </p>
+        <div class="mt-5 flex gap-4 text-sm text-skin-hue">
+          {entry.data.slidesUrl && <a href={entry.data.slidesUrl} target="_blank" rel="noopener noreferrer" class="hover:underline">View slides ↗</a>}
+          {entry.data.videoUrl && <a href={entry.data.videoUrl} target="_blank" rel="noopener noreferrer" class="hover:underline">Watch video ↗</a>}
+        </div>
+      </header>
+      <div class="prose prose-invert prose-skin max-w-none prose-headings:text-skin-base prose-p:text-skin-base prose-a:text-skin-hue prose-strong:text-skin-base prose-li:text-skin-base"><Content /></div>
+    </article>
+  </main>
+  <KeyboardManager />
+</Layout>
+
+<script>
+  const returnTo = new URLSearchParams(window.location.search).get('returnTo');
+  const backLink = document.querySelector<HTMLAnchorElement>('[data-context-back]');
+  const backLabel = backLink?.querySelector<HTMLElement>('[data-context-back-label]');
+  if (returnTo?.startsWith('/') && !returnTo.startsWith('//') && backLink) {
+    backLink.href = returnTo;
+    if (backLabel) backLabel.textContent = '← Back to series';
+  }
+</script>
