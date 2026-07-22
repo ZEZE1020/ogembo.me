@@ -1,6 +1,6 @@
 ---
 title: "Calming the Storm: Building Resilient IoT Infrastructure for Precision Agriculture in Kenya"
-date: 2026-07-1
+date: 2026-07-01
 event: "AWS Community Day Kenya 2026"
 ---
 
