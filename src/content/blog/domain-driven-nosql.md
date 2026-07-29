@@ -201,6 +201,6 @@ When you let the business domain dictate the data model, you unlock incredible h
 ---
 
 ## References
-1. Cost Optimization with Optimal Document Size - MongoDB (citing general enterprise use cases)
-2. What is a Cassandra Compaction Strategy? - ScyllaDB (detailing TimeWindowCompactionStrategy used by IoT/time-series giants)
-3. Graph - LinkedIn Engineering
+1. [Cost Optimization with Optimal Document Size - MongoDB](https://www.mongodb.com/company/blog/technical/cost-optimization-with-optimal-document-size)
+2. [What is a Cassandra Compaction Strategy? - ScyllaDB](https://www.scylladb.com/glossary/cassandra-compaction-strategy/)
+3. [Graph - LinkedIn Engineering](https://engineering.linkedin.com/teams/data/data-infrastructure/graph)
