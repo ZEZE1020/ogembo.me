@@ -94,7 +94,7 @@
       "position": "Coding Instructor",
       "location_type": "On-site",
       "location": "Homabay, Kenya",
-      "url": "https://kidscodelab.com/", 
+      "url": "https://kidscodelab.com/",
       "startDate": "2024-11-01",
       "endDate": "Present",
       "summary": "Directed data-driven, hands-on programming labs and coding symposia for 60+ learners, driving strong technical engagement and foundational skill development.",
@@ -213,7 +213,7 @@
     {
       "name": "AI-Powered Digital Trade Companion",
       "isActive": true,
-      "description": "Developed a containerized backend using modern Python\u2019s FastAPI to support an AI-driven application for cross-border traders in East Africa.",
+      "description": "Developed a containerized backend using modern Python’s FastAPI to support an AI-driven application for cross-border traders in East Africa.",
       "highlights": [
         "Integrated Generative AI capabilities to provide real-time, context-aware assistance.",
         "Focused on high-performance REST APIs and robust data management."
@@ -225,6 +225,28 @@
       },
       "url": "https://vpasi.app",
       "github": "https://github.com/ZEZE1020/vpasi"
+    },
+    {
+      "name": "FeedSync - KijaniSpace Hackathon Winner",
+      "isActive": true,
+      "description": "KijaniSpace Hackathon winner: IoT platform delivering data-driven feeding decisions for Lake Victoria fish farms to reduce waste.",
+      "highlights": [
+        "Co-built this winning hackathon project in just 36 hours with a 4-person team",
+        "Led backend development: FastAPI + PostgreSQL on Google Cloud",
+        "Integrated KijaniSpace agro-climate APIs with physical IoT sensors and feeder hardware",
+        "Architected full-stack monorepo: Next.js 16 frontend, Docker, and automated CI/CD"
+      ],
+      "stack": {
+        "Python": "simple-icons:python",
+        "FastAPI": "simple-icons:fastapi",
+        "TypeScript": "simple-icons:typescript",
+        "Next.js": "simple-icons:nextdotjs",
+        "PostgreSQL": "simple-icons:postgresql",
+        "Docker": "mdi:docker",
+        "GCP": "simple-icons:googlecloud"
+      },
+      "url": "https://feedsync-web-975790420809.europe-west10.run.app/",
+      "github": "https://github.com/ZEZE1020/FeedSync"
     }
   ]
 }

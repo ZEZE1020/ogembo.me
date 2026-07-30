@@ -103,8 +103,17 @@ import { projects } from "@cv";
   ul {
     @apply ml-4 list-disc space-y-1;
     li {
-      @apply text-skin-muted marker:text-skin-hue;
+      @apply text-skin-muted marker:text-skin-hue break-words;
+      white-space: normal;
+      overflow-wrap: break-word;
+      max-width: 100%;
     }
+  }
+
+  p {
+    @apply break-words;
+    white-space: normal;
+    overflow-wrap: break-word;
   }
 
   footer {
