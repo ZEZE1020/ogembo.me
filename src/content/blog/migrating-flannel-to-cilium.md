@@ -1,11 +1,11 @@
 ---
-title: "How to Migrate Live Kubernetes Clusters from Flannel to Cilium Node-by-Node"
+title: "Today on Kubernetes: How to Migrate Live Kubernetes Clusters from Flannel to Cilium Node-by-Node"
 description: "A hands-on guide to safely executing a live, rolling migration from Flannel to Cilium using Cilium's CiliumNodeConfig CRD, allowing you to migrate a cluster node by node without disrupting existing pod-to-pod communication."
 pubDate: 2026-08-03
 tags: ["Kubernetes", "Cilium", "Flannel", "CNI", "eBPF", "Networking", "Migration", "DevOps"]
 ---
 
-# How to Migrate Live Kubernetes Clusters from Flannel to Cilium Node-by-Node
+# Today on Kubernetes: How to Migrate Live Kubernetes Clusters from Flannel to Cilium Node-by-Node
 
 When you first spin up a Kubernetes cluster, your primary goal is simple: get your pods talking to each other. For this, Flannel is often the undisputed champion. It is incredibly lightweight, requires almost zero configuration, and "just works." If you are building a home lab, a local cluster with kubeadm, or a proof-of-concept environment, Flannel is the perfect CNI (Container Network Interface) to get you off the ground quickly.
 
